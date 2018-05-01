@@ -33,15 +33,8 @@ data Tile = Tile
   { tileBackground     :: Background
   , tileForeground     :: Maybe Foreground
   , tileTraversal      :: [Travelmethod]
-    , objectContents   :: [Object]
+  , objectContents     :: [Object]
   , occupyingCharacter :: Maybe Character
   }
 
-grassTile = Tile
-  {
-      tileBackground = Grass
-    , tileForeground = Just Weeds
-    , tileTraversal = [Walk, Fly]
-    , objectContents = []
-    , occupyingCharacter = Nothing
-  }
+grassTile = Tile Grass (Just Weeds) [Walk, Fly] [] Nothing
