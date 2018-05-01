@@ -10,7 +10,7 @@ import           Helm.Graphics2D
 import qualified Helm.Cmd        as Cmd
 import qualified Helm.Engine.SDL as SDL
 import qualified Helm.Mouse      as Mouse
-import           Maps.Tile       as Tile
+import           Types.Tile      as Tile
 
 data Action = Idle | ChangePosition (V2 Double)
 data Model = Model (V2 Double)
