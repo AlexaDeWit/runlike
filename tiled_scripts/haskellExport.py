@@ -24,6 +24,26 @@ class HaskellExport(Plugin):
         idNum = tile.id()
         indices = ["Cedar", "Deciduous", "Bush", "Flowers", "Plants", "Weeds", "Cactus", "Rocks"]
         return '( Just ${indices[idNum]} )' if idNum < len(indices) else "Nothing"
+
+    @classmethod
+    def movementLayerComponent(cls, tile):
+        if tile is None:
+            return "[]"
+        idNum = tile.id()
+        indices = ["[]", "[Walk, Fly]", "[Fly]", "[Swim]"]
+        return indices[idNum] if idNum < len(indices) else "[]"
+
+    @classmethod
+    def characterLayerComponent(cls, tile):
+        return "Nothing"
+
+    @classmethod
+    def objectLayerComponent(cls, tile):
+        if tile is None:
+            return "[}"
+        idNum = tile.id()
+        indices = []
+        return indices[idNum] if idNum < len(indices) else "[]"
         
     @classmethod
     def tilestackToHaskellTile(cls, tileMap, x, y):
