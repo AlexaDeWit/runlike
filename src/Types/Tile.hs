@@ -10,7 +10,7 @@ data Background
     | Sand
     | Water
     | Ice
-    | Rocky
+    | Rocks
     | Mud
 
 data Foreground
