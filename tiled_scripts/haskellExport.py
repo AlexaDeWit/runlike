@@ -40,7 +40,7 @@ class HaskellExport(Plugin):
     @classmethod
     def objectLayerComponent(cls, tile):
         if tile is None:
-            return "[}"
+            return "[]"
         idNum = tile.id()
         indices = []
         return indices[idNum] if idNum < len(indices) else "[]"
