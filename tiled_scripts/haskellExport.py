@@ -5,6 +5,16 @@ from string import Template
 class HaskellExport(Plugin):
 
     tileItemTemplate = Template('${prefix}${body}')
+    backgroundItems = [
+            "Grass", "Snow", "Dirt", "Sand", "Water", "Ice", "Rocks", "Mud"
+            ]
+    foregroundItems = [
+            "Cedar", "Deciduous", "Bush", "Flowers",
+            "Plants", "Weeds", "Cactus", "Rocks"
+            ]
+    movementTileDefinitions = [
+            "[]", "[Walk, Fly]", "[Fly]", "[Swim]"
+            ]
 
     @classmethod
     def nameFilter(cls):
@@ -17,25 +27,20 @@ class HaskellExport(Plugin):
     @classmethod
     def backgroundLayerComponent(cls, tile):
         if tile is None:
-            return "Grass"
+            return cls.backgroundItems[0]
         idNum = tile.id()
-        indices = [
-                "Grass", "Snow", "Dirt", "Sand", "Water", "Ice", "Rocks", "Mud"
-            ]
-        return indices[idNum] if idNum < len(indices) else "Grass"
+        if idNum < len(cls.backgroundItems):
+            return cls.backgroundItems[idNum]
+        else:
+            return cls.backgroundItems[0]
 
     @classmethod
     def foregroundLayerComponent(cls, tile):
         if tile is None:
             return "Nothing"
         idNum = tile.id()
-        indices = [
-                "Cedar", "Deciduous", "Bush", "Flowers",
-                "Plants", "Weeds", "Cactus", "Rocks"
-            ]
-
-        if idNum < len(indices):
-            return '( Just ${indices[idNum]} )'
+        if idNum < len(cls.foregroundItems):
+            return '( Just ' + cls.foregroundItems[idNum] + ' )'
         else:
             return "Nothing"
 
@@ -44,8 +49,10 @@ class HaskellExport(Plugin):
         if tile is None:
             return "[]"
         idNum = tile.id()
-        indices = ["[]", "[Walk, Fly]", "[Fly]", "[Swim]"]
-        return indices[idNum] if idNum < len(indices) else "[]"
+        if idNum < len(cls.movementTileDefinitions):
+            return cls.movementTileDefinitions[idNum]
+        else:
+            return '[]'
 
     @classmethod
     def characterLayerComponent(cls, tile):
