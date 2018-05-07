@@ -1,8 +1,5 @@
 module Types.Tile where
 
-import           Types.Character (Character)
-import           Types.Object    (Object)
-
 data Background
     = Grass
     | Snow
@@ -30,11 +27,9 @@ data Travelmethod
   | Fly
 
 data Tile = Tile
-  { tileBackground     :: Background
-  , tileForeground     :: Maybe Foreground
-  , tileTraversal      :: [Travelmethod]
-  , objectContents     :: [Object]
-  , occupyingCharacter :: Maybe Character
+  { tileBackground :: Background
+  , tileForeground :: Maybe Foreground
+  , tileTraversal  :: [Travelmethod]
   }
 
-grassTile = Tile Grass (Just Weeds) [Walk, Fly] [] Nothing
+grassTile = Tile Grass (Just Weeds) [Walk, Fly]

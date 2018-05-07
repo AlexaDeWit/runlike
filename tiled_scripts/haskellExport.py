@@ -92,28 +92,25 @@ class HaskellExport(Plugin):
 
     @classmethod
     def tilestackToHaskellTile(cls, tileMap, x, y):
-        backgroundTileLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.BACKGROUND_LAYER))
-        foregroundTileLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.FOREGROUND_LAYER))
-        objectsTileLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.OBJECTS_LAYER))
-        movementTileLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.MOVEMENT_LAYER))
-        characterTileLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.CHARACTER_LAYER))
+        backgroundTileLayer = tileLayerAt(
+                tileMap, cls.tileLayerIndices.get(cls.BACKGROUND_LAYER)
+                )
+        foregroundTileLayer = tileLayerAt(
+                tileMap, cls.tileLayerIndices.get(cls.FOREGROUND_LAYER)
+                )
+        movementTileLayer = tileLayerAt(
+                tileMap, cls.tileLayerIndices.get(cls.MOVEMENT_LAYER)
+                )
         bgPart = cls.backgroundLayerComponent(
                 backgroundTileLayer.cellAt(x, y)
                 .tile())
         fgPart = cls.foregroundLayerComponent(
                 foregroundTileLayer.cellAt(x, y)
                 .tile())
-        ojPart = cls.objectLayerComponent(
-                objectsTileLayer.cellAt(x, y)
-                .tile())
-        chrPart = cls.characterLayerComponent(
-                characterTileLayer.cellAt(x, y)
-                .tile())
         mvPart = cls.movementLayerComponent(
                 movementTileLayer.cellAt(x, y)
                 .tile())
-        return ('Tile ' + bgPart + ' ' + fgPart + ' ' + mvPart + ' ' + ojPart +
-                ' ' + chrPart)
+        return 'Tile ' + bgPart + ' ' + fgPart + ' ' + mvPart
 
     @classmethod
     def hasAllNeededTileLayers(cls, tileMap):
