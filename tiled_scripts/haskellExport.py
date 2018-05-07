@@ -6,14 +6,14 @@ class HaskellExport(Plugin):
 
     tileItemTemplate = Template('${prefix}${body}')
     backgroundItems = [
-            "Grass", "Snow", "Dirt", "Sand", "Water", "Ice", "Rocks", "Mud"
+            "Grass", "Snow", "Rocks", "Water", "Dirt"
             ]
     foregroundItems = [
             "Cedar", "Deciduous", "Bush", "Flowers",
             "Plants", "Weeds", "Cactus", "Rocks"
             ]
     movementTileDefinitions = [
-            "[]", "[Walk, Fly]", "[Fly]", "[Swim]"
+            "[]", "[Walk, Fly]", "[Fly]", "[Fly, Swim]"
             ]
 
     @classmethod
