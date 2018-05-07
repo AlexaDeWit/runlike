@@ -4,6 +4,30 @@ from string import Template
 
 class HaskellExport(Plugin):
 
+    @classmethod
+    def fileHeader(cls, fileName):
+        return '''
+        '''
+
+    @classmethod
+    def fileFooter(cls, fileName):
+        return '''
+        '''
+
+    BACKGROUND_LAYER = 'Background'
+    FOREGROUND_LAYER = 'Foreground'
+    OBJECTS_LAYER = 'Objects'
+    CHARACTER_LAYER = 'Character'
+    MOVEMENT_LAYER = 'Movement'
+
+    tileLayerIndices = {
+            BACKGROUND_LAYER: 0,
+            FOREGROUND_LAYER: 1,
+            MOVEMENT_LAYER: 2,
+            OBJECTS_LAYER: 3,
+            CHARACTER_LAYER: 4
+        }
+
     tileItemTemplate = Template('${prefix}${body}')
     backgroundItems = [
             "Grass", "Snow", "Rocks", "Water", "Dirt"
@@ -68,28 +92,33 @@ class HaskellExport(Plugin):
 
     @classmethod
     def tilestackToHaskellTile(cls, tileMap, x, y):
-        return ''
+        return 'Line'
 
     @classmethod
-    def hasAllNeededTileLayers(cls, tileMap, requiredLayers):
-        neededLayerNumbers = range(0, requiredLayers)
-        if all(isTileLayerAt(tileMap, index) for index in neededLayerNumbers):
-            backgroundLayer = tileLayerAt(tileMap, requiredLayers)
-            for layerNumber in range(1, 5):
-                layer = tileLayerAt(tileMap, layerNumber)
-                if(layer.width() != backgroundLayer.width()
-                        or layer.height() != backgroundLayer.height()):
-                            return False
-            return True
-        return False
+    def hasAllNeededTileLayers(cls, tileMap):
+        if not isTileLayerAt(tileMap, cls.tileLayerIndices.get(cls.BACKGROUND_LAYER)):
+            return False
+        backgroundLayer = tileLayerAt(
+                tileMap,
+                cls.tileLayerIndices.get(cls.BACKGROUND_LAYER)
+                )
+        for layerConfigKey in cls.tileLayerIndices.keys():
+            if not isTileLayerAt(tileMap, cls.tileLayerIndices.get(layerConfigKey)):
+                return False
+            currLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(layerConfigKey))
+            if(currLayer.width() != backgroundLayer.width()
+                    or currLayer.height() != backgroundLayer.height()):
+                    return False
+        return True
 
     @classmethod
     def write(cls, tileMap, fileName):
-        requiredLayers = 5
         with open(fileName, 'w') as fileHandle:
-            if cls.hasAllNeededTileLayer(cls, tileMap, requiredLayers):
-                backgroundTileLayer = tileLayerAt(tileMap, 0)
-                textLines = []
+            if cls.hasAllNeededTileLayers(tileMap):
+                backgroundTileLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.BACKGROUND_LAYER))
+                textLines = [cls.fileHeader(fileName)]
+                print(backgroundTileLayer.x())
+                print(dir(backgroundTileLayer))
                 for y in range(backgroundTileLayer.height()):
                     for x in range(backgroundTileLayer.width()):
                         prefix = '    [ ' if x == 0 else '    , '
@@ -97,9 +126,11 @@ class HaskellExport(Plugin):
                             cls.tileItemTemplate.substitute(
                                 prefix=prefix,
                                 body=cls.tilestackToHaskellTile(
-                                    cls, tileMap, x, y
+                                    tileMap, x, y
                                 )
                             ))
                     textLines.append('    ]')
+                textLines.append(cls.fileFooter(fileName))
                 for line in textLines:
                     print >>fileHandle, line
+        return True
