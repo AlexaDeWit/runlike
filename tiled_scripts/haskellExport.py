@@ -127,7 +127,7 @@ class HaskellExport(Plugin):
         mvPart = cls.movementLayerComponent(
                 movementTileLayer.cellAt(x, y)
                 .tile())
-        return '((' + str(x) + ', ' + str(y) + '), Tile ' + bgPart + ' ' + fgPart + ' ' + mvPart + ')'
+        return '((' + str(x).rjust(3) + ', ' + str(y).rjust(3) + '), Tile ' + bgPart + ' ' + fgPart + ' ' + mvPart + ')'
 
     @classmethod
     def hasAllNeededTileLayers(cls, tileMap):
@@ -155,7 +155,7 @@ class HaskellExport(Plugin):
                 textLines.append('    array ((0,0),(' + str(backgroundTileLayer.width() - 1) + ',' + str(backgroundTileLayer.height() - 1) + '))')
                 for y in range(backgroundTileLayer.height()):
                     for x in range(backgroundTileLayer.width()):
-                        prefix = '    [' if x == 0 and y == 0 else '    , '
+                        prefix = '    [ ' if x == 0 and y == 0 else '    , '
                         textLines.append(
                             cls.tileItemTemplate.substitute(
                                 prefix=prefix,
