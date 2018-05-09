@@ -127,7 +127,7 @@ class HaskellExport(Plugin):
         mvPart = cls.movementLayerComponent(
                 movementTileLayer.cellAt(x, y)
                 .tile())
-        return '((' + str(x).rjust(3) + ', ' + str(y).rjust(3) + '), Tile ' + bgPart + ' ' + fgPart + ' ' + mvPart + ')'
+        return '((' + str(x).rjust(3) + ', ' + str(y).rjust(3) + '), Tile    ' + bgPart.ljust(10) + ' ' + fgPart.ljust(12) + ' ' + mvPart.ljust(15) + ')'
 
     @classmethod
     def hasAllNeededTileLayers(cls, tileMap):
