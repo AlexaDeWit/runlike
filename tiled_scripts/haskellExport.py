@@ -6,7 +6,7 @@ class HaskellExport(Plugin):
 
     @classmethod
     def fileHeader(cls, fileName):
-        name = fileName.split('/')[-1].split('.')[0].capitalize()
+        name = fileName.split('/')[-1].split('.')[0]
         moduleLine = 'module Maps.' + name + ' where'
         imports = [
             '',

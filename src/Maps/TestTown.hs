@@ -1,4 +1,4 @@
-module Maps.Testtown where
+module Maps.TestTown where
 
 
 import         Data.Array

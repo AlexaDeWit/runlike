@@ -3,30 +3,30 @@ module Main where
 import           Linear.V2       (V2 (V2))
 
 import           Helm
+import           Helm.Sub
 import           Helm.Color
 import           Helm.Engine.SDL (SDLEngine)
 import           Helm.Graphics2D
 import           Types.GameMap
+import           Maps.TestTown as TestTown
 
 import qualified Helm.Cmd        as Cmd
 import qualified Helm.Engine.SDL as SDL
-import qualified Helm.Mouse      as Mouse
 
-data Action = Idle | ChangePosition (V2 Double)
-newtype Model = Model (V2 Double) GameMap
+data Action = Idle
+data Model = Model (V2 Double) GameMap
 
 initial :: (Model, Cmd SDLEngine Action)
-initial = (Model $ V2 0 0, Cmd.none)
+initial = (Model (V2 0 0) TestTown.map, Cmd.none)
 
 update :: Model -> Action -> (Model, Cmd SDLEngine Action)
 update model Idle             = (model, Cmd.none)
-update _ (ChangePosition pos) = (Model pos, Cmd.none)
 
 subscriptions :: Sub SDLEngine Action
-subscriptions = Mouse.moves (\(V2 x y) -> ChangePosition $ V2 (fromIntegral x) (fromIntegral y))
+subscriptions = Helm.Sub.none
 
 view :: Model -> Graphics SDLEngine
-view (Model pos) = Graphics2D $ collage [move pos $ filled (rgb 1 0 0) $ square 10]
+view (Model pos _) = Graphics2D $ collage [move pos $ filled (rgb 1 0 0) $ square 10]
 
 main :: IO ()
 main = do
