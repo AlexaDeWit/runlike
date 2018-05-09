@@ -1,5 +1,6 @@
 module Types.GameMap where
 
+import           Data.Array
 import           Types.Tile
 
 -- Maybe use Data.Map.Strict, indexed via my own index type
@@ -7,5 +8,5 @@ import           Types.Tile
 --
 -- Maybe write some safe util functions that perform mapping/mutation operations and handle failure cases?
 data GameMap = GameMap
-  {
+  { tiles :: Array (Int, Int) Tile
   }

@@ -7,7 +7,7 @@ data Background
     | Sand
     | Water
     | Ice
-    | Rocks
+    | Rocky
     | Mud
 
 data Foreground
@@ -32,4 +32,5 @@ data Tile = Tile
   , tileTraversal  :: [Travelmethod]
   }
 
+grassTile :: Tile
 grassTile = Tile Grass (Just Weeds) [Walk, Fly]
