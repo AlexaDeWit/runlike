@@ -69,6 +69,7 @@ executable runlike
   build-depends:        base >=4.10 && <4.11
                       , helm >= 1.0 && < 2.0
                       , linear >= 1.20.7 && <2.0
+                      , array
   
   -- Directories containing source files.
   hs-source-dirs:      src

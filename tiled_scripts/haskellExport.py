@@ -6,13 +6,30 @@ class HaskellExport(Plugin):
 
     @classmethod
     def fileHeader(cls, fileName):
-        return '''
-        '''
+        name = fileName.split('/')[-1].split('.')[0].capitalize()
+        moduleLine = 'module Maps.' + name + ' where'
+        imports = [
+            '',
+            '',
+            'import         Data.Array',
+            'import         Types.GameMap',
+            'import         Types.Tile',
+            '',
+            ''
+        ]
+        definitions = [
+            'map :: GameMap',
+            'map =',
+            '  GameMap { tiles ='
+        ]
+        return [moduleLine] + imports + definitions
 
     @classmethod
     def fileFooter(cls, fileName):
-        return '''
-        '''
+        closings = [
+            '  }'
+        ]
+        return closings
 
     BACKGROUND_LAYER = 'Background'
     FOREGROUND_LAYER = 'Foreground'
@@ -30,7 +47,7 @@ class HaskellExport(Plugin):
 
     tileItemTemplate = Template('${prefix}${body}')
     backgroundItems = [
-            "Grass", "Snow", "Rocks", "Water", "Dirt"
+            "Grass", "Snow", "Rocky", "Water", "Dirt"
             ]
     foregroundItems = [
             "Cedar", "Deciduous", "Bush", "Flowers",
@@ -110,7 +127,7 @@ class HaskellExport(Plugin):
         mvPart = cls.movementLayerComponent(
                 movementTileLayer.cellAt(x, y)
                 .tile())
-        return 'Tile ' + bgPart + ' ' + fgPart + ' ' + mvPart
+        return '((' + str(x) + ', ' + str(y) + '), Tile ' + bgPart + ' ' + fgPart + ' ' + mvPart + ')'
 
     @classmethod
     def hasAllNeededTileLayers(cls, tileMap):
@@ -134,10 +151,11 @@ class HaskellExport(Plugin):
         with open(fileName, 'w') as fileHandle:
             if cls.hasAllNeededTileLayers(tileMap):
                 backgroundTileLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.BACKGROUND_LAYER))
-                textLines = [cls.fileHeader(fileName)]
+                textLines = cls.fileHeader(fileName)
+                textLines.append('    array ((0,0),(' + str(backgroundTileLayer.width() - 1) + ',' + str(backgroundTileLayer.height() - 1) + '))')
                 for y in range(backgroundTileLayer.height()):
                     for x in range(backgroundTileLayer.width()):
-                        prefix = '    [ ' if x == 0 else '    , '
+                        prefix = '    [' if x == 0 and y == 0 else '    , '
                         textLines.append(
                             cls.tileItemTemplate.substitute(
                                 prefix=prefix,
@@ -145,8 +163,8 @@ class HaskellExport(Plugin):
                                     tileMap, x, y
                                 )
                             ))
-                    textLines.append('    ]')
-                textLines.append(cls.fileFooter(fileName))
+                textLines.append('    ]')
+                textLines = textLines + cls.fileFooter(fileName)
                 for line in textLines:
                     print >>fileHandle, line
         return True

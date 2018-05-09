@@ -6,14 +6,14 @@ import           Helm
 import           Helm.Color
 import           Helm.Engine.SDL (SDLEngine)
 import           Helm.Graphics2D
+import           Types.GameMap
 
 import qualified Helm.Cmd        as Cmd
 import qualified Helm.Engine.SDL as SDL
 import qualified Helm.Mouse      as Mouse
-import           Types.Tile      as Tile
 
 data Action = Idle | ChangePosition (V2 Double)
-data Model = Model (V2 Double)
+newtype Model = Model (V2 Double) GameMap
 
 initial :: (Model, Cmd SDLEngine Action)
 initial = (Model $ V2 0 0, Cmd.none)
