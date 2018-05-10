@@ -1,4 +1,4 @@
-module Model.Model where
+module Model where
 
 
 import           Helm

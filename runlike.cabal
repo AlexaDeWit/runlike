@@ -61,7 +61,7 @@ executable runlike
                        Types.Tile
                      , Types.Object
                      , Types.Character
-                     , Model.Model
+                     , Model
                      , Maps.TestTown
                      , Types.GameMap
   

@@ -5,7 +5,7 @@ import           Helm.Sub
 import           Helm.Color
 import           Helm.Engine.SDL (SDLEngine)
 import           Helm.Graphics2D
-import           Model.Model     (Model (Model), initial)
+import           Model
 
 import qualified Helm.Cmd        as Cmd
 import qualified Helm.Engine.SDL as SDL
