@@ -65,6 +65,7 @@ executable runlike
                      , Action
                      , View
                      , Update
+                     , Subscriptions
                      , Maps.TestTown
                      , Types.GameMap
   
