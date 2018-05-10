@@ -9,7 +9,5 @@ import qualified Helm.Cmd        as Cmd
 
 data Model = Model GameMap
 
-
-
 initial :: (Model, Cmd SDLEngine a)
 initial = (Model TestTown.map, Cmd.none)

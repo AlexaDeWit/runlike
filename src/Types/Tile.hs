@@ -20,7 +20,7 @@ data Foreground
     | Cactus
     | Rocks
 
-data Travelmethod
+data TravelMethod
   = Walk
   | Swim
   | Climb
@@ -29,7 +29,7 @@ data Travelmethod
 data Tile = Tile
   { tileBackground :: Background
   , tileForeground :: Maybe Foreground
-  , tileTraversal  :: [Travelmethod]
+  , tileTraversal  :: [TravelMethod]
   }
 
 grassTile :: Tile
