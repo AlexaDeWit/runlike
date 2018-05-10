@@ -1,7 +1,9 @@
 module Types.Tileset where
 
-import qualified     Data.Map as Map
-import               Types.Tile
+import           Helm.Graphics2D
+import           Types.Tile
+
+import qualified Data.Map as Map
 
 allValues :: (Bounded a, Enum a) => [a]
 allValues = [minBound..]
@@ -12,7 +14,6 @@ backgrounds = allValues
 foregrounds :: [Foreground]
 foregrounds = allValues
 
-data Form = Form
 data Image = Image
 
 data ImageScaleRate
@@ -23,10 +24,10 @@ data ImageScaleRate
 
 data TileSet = TileSet ImageScaleRate Image
 
-imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet -> Form
-imageToBoundedComponent point tileset = Form
+imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet -> Form e
+imageToBoundedComponent point tileset = error "Not Implemented"
 
-divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet -> Map.Map a Form
+divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet -> Map.Map a (Form e)
 divideByScaleRate tileset = Map.fromList $ map (\k -> (k, imageToBoundedComponent k tileset)) allValues
 -- List of tiles that exist for a given tileset
 -- Tileset needs an image scaling
