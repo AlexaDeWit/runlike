@@ -15,12 +15,18 @@ foregrounds = allValues
 data Form = Form
 data Image = Image
 
-data ImageScaleRate = ImageScaleRate Int Int
+data ImageScaleRate
+  = ImageScaleRate
+    { x :: Int
+    , y :: Int
+    }
 
-imageToBoundedComponent :: (Bounded a, Enum a) => a -> ImageScaleRate -> Image -> Form
-imageToBoundedComponent point scale image = Form
+data TileSet = TileSet ImageScaleRate Image
 
-divideByScaleRate :: (Bounded a, Enum a, Ord a) => ImageScaleRate -> Image -> Map.Map a Form
-divideByScaleRate scaleRate image = Map.fromList $ map (\k -> (k, imageToBoundedComponent k scaleRate image)) allValues
+imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet -> Form
+imageToBoundedComponent point tileset = Form
+
+divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet -> Map.Map a Form
+divideByScaleRate tileset = Map.fromList $ map (\k -> (k, imageToBoundedComponent k tileset)) allValues
 -- List of tiles that exist for a given tileset
 -- Tileset needs an image scaling
