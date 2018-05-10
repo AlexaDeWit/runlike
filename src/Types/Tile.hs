@@ -9,6 +9,7 @@ data Background
     | Ice
     | Rocky
     | Mud
+    deriving (Enum, Bounded, Eq, Ord)
 
 data Foreground
     = Cedar
@@ -19,6 +20,7 @@ data Foreground
     | Weeds
     | Cactus
     | Rocks
+    deriving (Enum, Bounded, Eq, Ord)
 
 data TravelMethod
   = Walk
