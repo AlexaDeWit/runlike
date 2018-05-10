@@ -62,6 +62,9 @@ executable runlike
                      , Types.Object
                      , Types.Character
                      , Model
+                     , Action
+                     , View
+                     , Update
                      , Maps.TestTown
                      , Types.GameMap
   
