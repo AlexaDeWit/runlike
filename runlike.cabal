@@ -58,9 +58,12 @@ executable runlike
   
   -- Modules included in this executable, other than Main.
   other-modules:       
-      Types.Tile
-    , Types.Object
-    , Types.Character
+                       Types.Tile
+                     , Types.Object
+                     , Types.Character
+                     , Model.Model
+                     , Maps.TestTown
+                     , Types.GameMap
   
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:    
