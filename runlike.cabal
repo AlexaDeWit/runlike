@@ -48,6 +48,9 @@ build-type:          Simple
 -- README.
 extra-source-files:  ChangeLog.md
 
+data-dir: assets
+data-files: assets/tilesets/*.png
+
 -- Constraint on the version of Cabal needed to build this package.
 cabal-version:       >=1.10
 
@@ -69,6 +72,7 @@ executable runlike
                      , Subscriptions
                      , Maps.TestTown
                      , Types.GameMap
+                     , Paths_runlike
   
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:    

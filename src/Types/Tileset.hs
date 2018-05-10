@@ -1,5 +1,6 @@
 module Types.Tileset where
 
+import           Helm
 import           Helm.Graphics2D
 import           Helm.Color
 import           Types.Tile
@@ -16,24 +17,22 @@ backgrounds = allValues
 foregrounds :: [Foreground]
 foregrounds = allValues
 
-data Image = Image
-
 data ImageScaleRate
   = ImageScaleRate
     { x :: Int
     , y :: Int
     }
 
-data TileSet
+data TileSet e
   = TileSet
     { imageScaleRate :: ImageScaleRate
-    , image          :: Image
+    , image          :: Image e
     }
 
-imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet -> Form e
+imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet e -> Form e
 imageToBoundedComponent point tileset = error "Not Implemented"
 
-divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet -> a -> (Form e)
+divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet e -> a -> Form e
 divideByScaleRate tileset = withDef where
   composedMap = Map.fromList $ map (\k -> (k, imageToBoundedComponent k tileset)) allValues
   imageScale = imageScaleRate tileset

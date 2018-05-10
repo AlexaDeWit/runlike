@@ -10,7 +10,7 @@ import           Types.Tile
 data PreparedTilesets e
   = PreparedTilesets
     { backgroundTile :: Background -> Form e
-    , foregroundTile :: Foreground -> Form e
+    -- , foregroundTile :: Foreground -> Form e
     }
 
 data Fooo e
