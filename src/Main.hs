@@ -2,11 +2,14 @@ module Main where
 
 import           Helm
 import           Model           (initial)
-import           View            (view)
+import           View            (view, PreparedTilesets)
 import           Update          (update)
 import           Subscriptions   (subscriptions)
 
 import qualified Helm.Engine.SDL as SDL
+
+crapTileset :: PreparedTilesets e
+crapTileset = error "Not implemented Yet Lol"
 
 main :: IO ()
 main = do
@@ -16,5 +19,5 @@ main = do
     { initialFn       = initial
     , updateFn        = update
     , subscriptionsFn = subscriptions
-    , viewFn          = view
+    , viewFn          = view crapTileset
     }
