@@ -46,7 +46,6 @@ imageToBoundedComponent point (TileSet imageScale image dims) = croppedImage v2P
   tilesWide = imageWidth `mod` xScale
   tilesHigh = imageHeight `mod` yScale
   xIndex = index `mod` tilesWide
-  v2Pos = V2 0 0
   formDims = V2 64 64
   -- yIndex = (index - xIndex) `div` tilesWide
   -- v2Pos = V2 (fromIntegral (xIndex * xScale)) (fromIntegral (yIndex * yScale))
