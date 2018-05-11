@@ -16,5 +16,5 @@ data PreparedTilesets e
 data Fooo e
 
 view :: PreparedTilesets engine -> Model -> Graphics engine
-view (PreparedTilesets backgroundFn) (Model _) = Graphics2D $ collage [backgroundFn Grass]
+view (PreparedTilesets backgroundFn) (Model _) = Graphics2D $ collage [backgroundFn Water]
 
