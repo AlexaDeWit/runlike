@@ -1,10 +1,16 @@
-module Types.Tileset where
+module Types.Tileset
+  (
+    ImageScaleRate (ImageScaleRate)
+  , TileSet (TileSet)
+  , divideByScaleRate
+  ) where
 
 import           Helm
 import           Helm.Graphics2D
 import           Helm.Color
 import           Types.Tile
-import           Linear.V2       (V2(V2))
+import           Control.Lens
+import           Linear.V2       (V2(V2), _x, _y)
 
 import qualified Data.Map as Map
 
@@ -27,10 +33,25 @@ data TileSet e
   = TileSet
     { imageScaleRate :: ImageScaleRate
     , image          :: Image e
+    , imageDims      :: V2 Int
     }
 
 imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet e -> Form e
-imageToBoundedComponent point tileset = error "Not Implemented"
+imageToBoundedComponent point (TileSet imageScale image dims) = croppedImage v2Pos formDims image where
+  xScale = x imageScale
+  yScale = y imageScale
+  index = fromEnum point
+  imageWidth = dims ^._x
+  imageHeight = dims ^._y
+  tilesWide = imageWidth `mod` xScale
+  tilesHigh = imageHeight `mod` yScale
+  xIndex = index `mod` tilesWide
+  v2Pos = V2 0 0
+  formDims = V2 64 64
+  -- yIndex = (index - xIndex) `div` tilesWide
+  -- v2Pos = V2 (fromIntegral (xIndex * xScale)) (fromIntegral (yIndex * yScale))
+  -- formDims = V2 (fromIntegral xScale) (fromIntegral yScale)
+
 
 divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet e -> a -> Form e
 divideByScaleRate tileset = withDef where

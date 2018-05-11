@@ -48,8 +48,10 @@ build-type:          Simple
 -- README.
 extra-source-files:  ChangeLog.md
 
-data-dir: assets
-data-files: assets/tilesets/*.png
+data-dir:            assets
+data-files:          tilesets/TilesetBackground.png
+                   , tilesets/TilesetObjects.png
+                   , tilesets/TilesetCharacters.png
 
 -- Constraint on the version of Cabal needed to build this package.
 cabal-version:       >=1.10
@@ -83,6 +85,7 @@ executable runlike
                       , linear >= 1.20.7 && <2.0
                       , array
                       , containers
+                      , lens
   
   -- Directories containing source files.
   hs-source-dirs:      src

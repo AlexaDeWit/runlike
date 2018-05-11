@@ -1,7 +1,7 @@
 module Main where
 
 import           Helm
-import           Helm.Engine.SDL.Asset (withImage)
+import           Helm.Engine.SDL.Asset (withImage, imageDims)
 import           Model                 (initial)
 import           View
 import           Update                (update)
@@ -11,9 +11,6 @@ import           Subscriptions         (subscriptions)
 import           Paths_runlike
 
 import qualified Helm.Engine.SDL as SDL
-
-crapTileset :: PreparedTilesets e
-crapTileset = error "Not implemented Yet Lol"
 
 runGame :: Engine e => e -> PreparedTilesets e -> IO ()
 runGame engine tileset = run engine GameConfig
@@ -27,8 +24,8 @@ runGame engine tileset = run engine GameConfig
 main :: IO ()
 main = do
   engine             <- SDL.startup
-  backgroundFilePath <- getDataFileName "TileSetBackground.png"
+  backgroundFilePath <- getDataFileName "TilesetBackground.png"
   backgroundImage    <- withImage engine backgroundFilePath pure
-  let bgTileset      =  TileSet (ImageScaleRate 64 64) backgroundImage
+  let bgTileset      =  TileSet (ImageScaleRate 64 64) backgroundImage (imageDims backgroundImage)
   let tileset        =  PreparedTilesets (divideByScaleRate bgTileset)
   runGame engine tileset
