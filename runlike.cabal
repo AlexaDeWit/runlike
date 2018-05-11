@@ -48,10 +48,10 @@ build-type:          Simple
 -- README.
 extra-source-files:  ChangeLog.md
 
-data-dir:            assets
-data-files:          tilesets/TilesetBackground.png
-                   , tilesets/TilesetObjects.png
-                   , tilesets/TilesetCharacters.png
+data-dir:            assets/tilesets
+data-files:          TilesetBackground.png
+                   , TilesetObjects.png
+                   , TilesetCharacters.png
 
 -- Constraint on the version of Cabal needed to build this package.
 cabal-version:       >=1.10
