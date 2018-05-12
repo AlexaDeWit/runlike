@@ -13,22 +13,10 @@ import           Paths_runlike
 
 import qualified Helm.Engine.SDL as SDL
 
-runGame :: SDL.SDLEngine -> Image SDL.SDLEngine -> IO ()
-runGame engine backgroundImage = run engine GameConfig
-  { initialFn       = initial
-  , updateFn        = update
-  , subscriptionsFn = subscriptions
-  , viewFn          = view tileset
-  } where
-    bgTileset =  TileSet (ImageScaleRate 64 64) backgroundImage (imageDims backgroundImage)
-    tileset   =  PreparedTilesets (divideByScaleRate bgTileset)
-
-
 main :: IO ()
 main = do
   engine             <- SDL.startup
-  backgroundFilePath <- getDataFileName "TilesetBackground.png"
-  let tilesets       = prepareImages engine
+  tilesets           <- prepareImages engine
   with tilesets (\t -> run engine GameConfig
                 { initialFn       = initial
                 , updateFn        = update
@@ -36,5 +24,9 @@ main = do
                 , viewFn          = view t
                 })
 
-prepareImages :: SDL.SDLEngine -> Managed (PreparedTilesets SDL.SDLEngine)
-prepareImages = error "not implemented"
+prepareImages :: SDL.SDLEngine -> IO (Managed (PreparedTilesets SDL.SDLEngine))
+prepareImages engine =
+  error "I dunno lol"
+
+toTileset :: Image SDL.SDLEngine -> Int -> Int -> TileSet SDL.SDLEngine
+toTileset image xScale yScale = TileSet (ImageScaleRate xScale yScale) image (imageDims image)
