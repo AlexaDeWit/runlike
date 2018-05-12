@@ -8,6 +8,7 @@ import           Update                (update)
 import           Types.Tile
 import           Types.Tileset
 import           Subscriptions         (subscriptions)
+import           Control.Monad.Managed
 import           Paths_runlike
 
 import qualified Helm.Engine.SDL as SDL
@@ -27,4 +28,13 @@ main :: IO ()
 main = do
   engine             <- SDL.startup
   backgroundFilePath <- getDataFileName "TilesetBackground.png"
-  withImage engine backgroundFilePath (runGame engine)
+  let tilesets       = prepareImages engine
+  with tilesets (\t -> run engine GameConfig
+                { initialFn       = initial
+                , updateFn        = update
+                , subscriptionsFn = subscriptions
+                , viewFn          = view t
+                })
+
+prepareImages :: SDL.SDLEngine -> Managed (PreparedTilesets SDL.SDLEngine)
+prepareImages = error "not implemented"
