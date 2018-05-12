@@ -1,6 +1,7 @@
 module Main where
 
 import           Helm
+import           Helm.Graphics2D       (Form)
 import           Helm.Engine.SDL.Asset (withImage, imageDims)
 import           Model                 (initial)
 import           View
@@ -16,7 +17,7 @@ import qualified Helm.Engine.SDL as SDL
 main :: IO ()
 main = do
   engine             <- SDL.startup
-  tilesets           <- prepareImages engine
+  let tilesets       = prepareImages engine
   with tilesets (\t -> run engine GameConfig
                 { initialFn       = initial
                 , updateFn        = update
@@ -24,9 +25,13 @@ main = do
                 , viewFn          = view t
                 })
 
-prepareImages :: SDL.SDLEngine -> IO (Managed (PreparedTilesets SDL.SDLEngine))
+prepareImages :: SDL.SDLEngine -> Managed (PreparedTilesets SDL.SDLEngine)
 prepareImages engine =
-  error "I dunno lol"
+  do
+    bgFilename        <- liftIO $ getDataFileName "TilesetBackground.png"
+    bgImage           <- managed $ withImage engine bgFilename
+    let bgTilesetFn   =  toTilesetFn bgImage 64 64
+    return PreparedTilesets bgTilesetFn
 
-toTileset :: Image SDL.SDLEngine -> Int -> Int -> TileSet SDL.SDLEngine
-toTileset image xScale yScale = TileSet (ImageScaleRate xScale yScale) image (imageDims image)
+toTilesetFn :: (Bounded a, Enum a, Ord a) => Image SDL.SDLEngine -> Int -> Int -> a -> Form SDL.SDLEngine
+toTilesetFn image xScale yScale = divideByScaleRate $ TileSet (ImageScaleRate xScale yScale) image (imageDims image)
