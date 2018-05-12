@@ -27,6 +27,3 @@ data Tile = Tile
   , tileForeground :: Maybe Foreground
   , tileTraversal  :: [TravelMethod]
   }
-
-grassTile :: Tile
-grassTile = Tile Grass (Just Weeds) [Walk, Fly]
