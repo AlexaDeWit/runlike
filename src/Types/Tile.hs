@@ -3,23 +3,17 @@ module Types.Tile where
 data Background
     = Grass
     | Snow
-    | Dirt
-    | Sand
-    | Water
-    | Ice
     | Rocky
-    | Mud
+    | Water
+    | Dirt
+    | Void
     deriving (Enum, Bounded, Eq, Ord)
 
 data Foreground
-    = Cedar
-    | Deciduous
+    = Weeds
     | Bush
-    | Flowers
-    | Plants
-    | Weeds
-    | Cactus
     | Rocks
+    | Tree
     deriving (Enum, Bounded, Eq, Ord)
 
 data TravelMethod

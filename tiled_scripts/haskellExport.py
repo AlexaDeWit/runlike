@@ -50,8 +50,7 @@ class HaskellExport(Plugin):
             "Grass", "Snow", "Rocky", "Water", "Dirt"
             ]
     foregroundItems = [
-            "Cedar", "Deciduous", "Bush", "Flowers",
-            "Plants", "Weeds", "Cactus", "Rocks"
+            "Weeds", "Bush", "Rocks", "Tree"
             ]
     movementTileDefinitions = [
             "[]", "[Walk, Fly]", "[Fly]", "[Fly, Swim]"

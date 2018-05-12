@@ -43,13 +43,12 @@ imageToBoundedComponent point (TileSet imageScale image dims) = croppedImage v2P
   index = fromEnum point
   imageWidth = dims ^._x
   imageHeight = dims ^._y
-  tilesWide = imageWidth `mod` xScale
-  tilesHigh = imageHeight `mod` yScale
+  tilesWide = imageWidth `div` xScale
+  tilesHigh = imageHeight `div` yScale
   xIndex = index `mod` tilesWide
-  formDims = V2 64 64
-  -- yIndex = (index - xIndex) `div` tilesWide
-  -- v2Pos = V2 (fromIntegral (xIndex * xScale)) (fromIntegral (yIndex * yScale))
-  -- formDims = V2 (fromIntegral xScale) (fromIntegral yScale)
+  yIndex = (index - xIndex) `div` tilesWide
+  v2Pos = V2 (fromIntegral (xIndex * xScale)) (fromIntegral (yIndex * yScale))
+  formDims = V2 (fromIntegral xScale) (fromIntegral yScale)
 
 
 divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet e -> a -> Form e
