@@ -29,9 +29,12 @@ prepareImages :: SDL.SDLEngine -> Managed (PreparedTilesets SDL.SDLEngine)
 prepareImages engine =
   do
     bgFilename        <- liftIO $ getDataFileName "TilesetBackground.png"
+    fgFilename        <- liftIO $ getDataFileName "TilesetForeground.png"
     bgImage           <- managed $ withImage engine bgFilename
+    fgImage           <- managed $ withImage engine fgFilename
     let bgTilesetFn   =  toTilesetFn bgImage 64 64
-    return $ PreparedTilesets bgTilesetFn
+    let fgTilesetFn   =  toTilesetFn fgImage 64 64
+    return $ PreparedTilesets bgTilesetFn fgTilesetFn
 
 toTilesetFn :: (Bounded a, Enum a, Ord a) => Image SDL.SDLEngine -> Int -> Int -> a -> Form SDL.SDLEngine
 toTilesetFn image xScale yScale = divideByScaleRate $ TileSet (ImageScaleRate xScale yScale) image (imageDims image)
