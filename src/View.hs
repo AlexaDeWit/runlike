@@ -32,14 +32,10 @@ bgLayer tilesets model = collage positionedTiles where
 fgLayer :: PreparedTilesets e -> Model -> Collage e
 fgLayer tilesets model = collage positionedTiles where
   positionPairs   = assocs $ fmap tileForeground  (tiles $ currentMap model)
-  cleanedList     = catMaybes $ fmap sequenceSnd positionPairs
+  cleanedList     = catMaybes $ fmap sequence positionPairs
   mappedResults   = (fmap . second) (foregroundTile tilesets) cleanedList
   positionedTiles = fmap (mapOffset $ tileScaleRate tilesets) mappedResults
 
 mapOffset :: ImageScaleRate -> ((Int, Int), Form e) -> Form e
 mapOffset (ImageScaleRate xs ys) ((x, y), original) = move relPos original where
   relPos = V2 (fromIntegral $ x * xs) (fromIntegral $ y * ys)
-
-sequenceSnd :: ((Int, Int), Maybe a) -> Maybe ((Int, Int), a)
-sequenceSnd (p, Just a)  = Just (p, a)
-sequenceSnd (_, Nothing) = Nothing
