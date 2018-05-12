@@ -10,14 +10,10 @@ data Background
     deriving (Enum, Bounded, Eq, Ord)
 
 data Foreground
-    = Cedar
-    | Deciduous
+    = Weeds
     | Bush
-    | Flowers
-    | Plants
-    | Weeds
-    | Cactus
     | Rocks
+    | Tree
     deriving (Enum, Bounded, Eq, Ord)
 
 data TravelMethod

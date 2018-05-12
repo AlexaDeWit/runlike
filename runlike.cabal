@@ -80,7 +80,7 @@ executable runlike
   -- other-extensions:    
   
   -- Other library packages from which modules are imported.
-  build-depends:        base >=4.10 && <4.11
+  build-depends:        base >=4.10 && <4.12
                       , helm >= 1.0 && < 2.0
                       , linear >= 1.20.7 && <2.0
                       , array
