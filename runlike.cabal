@@ -87,6 +87,7 @@ executable runlike
                       , containers
                       , lens
                       , managed
+                      , extra
   
   -- Directories containing source files.
   hs-source-dirs:      src
