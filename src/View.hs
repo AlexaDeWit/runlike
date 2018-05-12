@@ -4,11 +4,13 @@ module View where
 import           Helm
 import           Model
 import           Helm.Graphics2D
-import           Types.Tile (Background(..), Foreground(..))
+import           Types.Tile        (Background(..), Foreground(..))
+import           Types.Tileset     (ImageScaleRate(..))
 
 data PreparedTilesets e
   = PreparedTilesets
-    { backgroundTile :: Background -> Form e
+    { tileScaleRate  :: ImageScaleRate
+    , backgroundTile :: Background -> Form e
     , foregroundTile :: Foreground -> Form e
     }
 

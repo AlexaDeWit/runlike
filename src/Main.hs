@@ -14,6 +14,13 @@ import           Paths_runlike
 
 import qualified Helm.Engine.SDL as SDL
 
+
+-- Configuration Values For Graphics
+tilesetScaleFactor :: ImageScaleRate
+tilesetScaleFactor = ImageScaleRate 64 64
+
+-- Implementation of game start. Any functions that explicitly mention the Engine type should be here in Main.
+
 main :: IO ()
 main = do
   engine             <- SDL.startup
@@ -32,9 +39,9 @@ prepareImages engine =
     fgFilename        <- liftIO $ getDataFileName "TilesetForeground.png"
     bgImage           <- managed $ withImage engine bgFilename
     fgImage           <- managed $ withImage engine fgFilename
-    let bgTilesetFn   =  toTilesetFn bgImage 64 64
-    let fgTilesetFn   =  toTilesetFn fgImage 64 64
-    return $ PreparedTilesets bgTilesetFn fgTilesetFn
+    let bgTilesetFn   =  toTilesetFn bgImage
+    let fgTilesetFn   =  toTilesetFn fgImage
+    return $ PreparedTilesets tilesetScaleFactor bgTilesetFn fgTilesetFn
 
-toTilesetFn :: (Bounded a, Enum a, Ord a) => Image SDL.SDLEngine -> Int -> Int -> a -> Form SDL.SDLEngine
-toTilesetFn image xScale yScale = divideByScaleRate $ TileSet (ImageScaleRate xScale yScale) image (imageDims image)
+toTilesetFn :: (Bounded a, Enum a, Ord a) => Image SDL.SDLEngine -> a -> Form SDL.SDLEngine
+toTilesetFn image = divideByScaleRate $ TileSet tilesetScaleFactor image (imageDims image)
