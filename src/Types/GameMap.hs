@@ -1,6 +1,7 @@
 module Types.GameMap where
 
-import           Data.Array
+import           Data.Array      (Array)
+import           Data.Map        (Map)
 import           Types.Tile
 import           Types.Character
 
@@ -9,5 +10,6 @@ import           Types.Character
 --
 -- Maybe write some safe util functions that perform mapping/mutation operations and handle failure cases?
 data GameMap = GameMap
-  { tiles :: Array (Int, Int) Tile
+  { tiles      :: Array (Int, Int) Tile
+  , characters :: Map   (Int, Int) Character
   }

@@ -14,6 +14,7 @@ class HaskellExport(Plugin):
             'import         Data.Array',
             'import         Types.GameMap',
             'import         Types.Tile',
+            'import         Types.Character',
             '',
             ''
         ]
@@ -46,6 +47,7 @@ class HaskellExport(Plugin):
         }
 
     tileItemTemplate = Template('${prefix}${body}')
+
     backgroundItems = [
             "Grass", "Snow", "Rocky", "Water", "Dirt"
             ]
@@ -55,6 +57,10 @@ class HaskellExport(Plugin):
     movementTileDefinitions = [
             "[]", "[Walk, Fly]", "[Fly]", "[Fly, Swim]"
             ]
+
+    characterTileDefinitions = [
+        "rat", "direRat"
+    ]
 
     @classmethod
     def nameFilter(cls):
