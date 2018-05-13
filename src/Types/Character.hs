@@ -1,3 +1,8 @@
 module Types.Character where
 
-data Character = Character {}
+import Types.Tile      (CharacterRepresentation(..))
+
+data Character
+  = Character
+    { representation :: CharacterRepresentation
+    }

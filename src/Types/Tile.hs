@@ -22,6 +22,15 @@ data TravelMethod
   | Climb
   | Fly
 
+data CharacterRepresentation
+  = Rat
+  | DireRat
+
+data ObjectRepresentation
+  = ClosedChest
+  | OpenChest
+  | Sack
+
 data Tile = Tile
   { tileBackground :: Background
   , tileForeground :: Maybe Foreground
