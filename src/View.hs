@@ -19,8 +19,6 @@ data PreparedTilesets e
     , foregroundTile :: Foreground -> Form e
     }
 
-data Fooo e
-
 view :: PreparedTilesets engine -> Model -> Graphics engine
 view tilesets model = Graphics2D $ collage [toForm $ bgLayer tilesets model, toForm $ fgLayer tilesets model]
 
