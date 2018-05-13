@@ -2,6 +2,7 @@ module Types.GameMap where
 
 import           Data.Array
 import           Types.Tile
+import           Types.Character
 
 -- Maybe use Data.Map.Strict, indexed via my own index type
 -- This index type could have SAFE leftOf rightOf above below etc function?

@@ -2,6 +2,7 @@ module Main where
 
 import           Helm
 import           Helm.Graphics2D       (Form)
+import           Helm.Engine.SDL       (SDLEngineConfig(..))
 import           Helm.Engine.SDL.Asset (withImage, imageDims)
 import           Model                 (initial)
 import           View
@@ -9,6 +10,7 @@ import           Update                (update)
 import           Types.Tile
 import           Types.Tileset
 import           Subscriptions         (subscriptions)
+import           Linear.V2             (V2(V2))
 import           Control.Monad.Managed
 import           Paths_runlike
 
@@ -21,9 +23,17 @@ tilesetScaleFactor = ImageScaleRate 64 64
 
 -- Implementation of game start. Any functions that explicitly mention the Engine type should be here in Main.
 
+engineConf :: SDLEngineConfig
+engineConf = SDLEngineConfig
+  { windowDimensions = V2 800 600
+  , windowIsFullscreen = False
+  , windowIsResizable = True
+  , windowTitle = "RUnlike"
+  }
+
 main :: IO ()
 main = do
-  engine             <- SDL.startup
+  engine             <- SDL.startupWith engineConf
   let tilesets       = prepareImages engine
   with tilesets (\t -> run engine GameConfig
                 { initialFn       = initial

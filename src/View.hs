@@ -19,7 +19,7 @@ data PreparedTilesets e
     , foregroundTile :: Foreground -> Form e
     }
 
-view :: PreparedTilesets engine -> Model -> Graphics engine
+view :: PreparedTilesets e-> Model -> Graphics e
 view tilesets model = Graphics2D $ collage [toForm $ bgLayer tilesets model, toForm $ fgLayer tilesets model]
 
 bgLayer :: PreparedTilesets e -> Model -> Collage e
