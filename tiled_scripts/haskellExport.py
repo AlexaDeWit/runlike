@@ -22,7 +22,7 @@ class HaskellExport(Plugin):
         definitions = [
             'map :: GameMap',
             'map =',
-            '  GameMap { '
+            '  GameMap {'
         ]
         return [moduleLine] + imports + definitions
 
@@ -158,7 +158,7 @@ class HaskellExport(Plugin):
         lines.append('      array ((0,0),(' + str(backgroundTileLayer.width() - 1) + ',' + str(backgroundTileLayer.height() - 1) + '))')
         for y in range(backgroundTileLayer.height()):
             for x in range(backgroundTileLayer.width()):
-                prefix = '      [ ' if x == 0 and y == 0 else '    , '
+                prefix = '        [ ' if x == 0 and y == 0 else '        , '
                 lines.append(
                     cls.tileItemTemplate.substitute(
                         prefix=prefix,
@@ -166,7 +166,7 @@ class HaskellExport(Plugin):
                             tileMap, x, y
                         )
                     ))
-        lines.append('      ]')
+        lines.append('        ]')
         return lines
 
     @classmethod
