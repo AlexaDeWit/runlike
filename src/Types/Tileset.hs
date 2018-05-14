@@ -37,7 +37,7 @@ data TileSet e
     }
 
 imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet e -> Form e
-imageToBoundedComponent point (TileSet imageScale image dims) = croppedImage v2Pos formDims image where
+imageToBoundedComponent point (TileSet imageScale img dims) = croppedImage v2Pos formDims img where
   xScale = x imageScale
   yScale = y imageScale
   index = fromEnum point
@@ -49,6 +49,7 @@ imageToBoundedComponent point (TileSet imageScale image dims) = croppedImage v2P
   yIndex = (index - xIndex) `div` tilesWide
   v2Pos = V2 (fromIntegral (xIndex * xScale)) (fromIntegral (yIndex * yScale))
   formDims = V2 (fromIntegral xScale) (fromIntegral yScale)
+  -- TODO: upper bound limiting
 
 
 divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet e -> a -> Form e
@@ -59,5 +60,3 @@ divideByScaleRate tileset = withDef where
   yscale = fromIntegral $ y imageScale
   def         = filled (rgb 255 105 180) (rect $ V2 xscale yscale)
   withDef a = Map.findWithDefault def a composedMap
--- List of tiles that exist for a given tileset
--- Tileset needs an image scaling
