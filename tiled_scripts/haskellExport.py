@@ -21,7 +21,6 @@ class HaskellExport(Plugin):
         definitions = [
             'map :: GameMap',
             'map =',
-            '  GameMap { tiles ='
         ]
         return [moduleLine] + imports + definitions
 
@@ -152,23 +151,34 @@ class HaskellExport(Plugin):
         return True
 
     @classmethod
+    def tileArrayLines(cls, tileMap, backgroundTileLayer):
+        lines = ['  GameMap { tiles =']
+        lines.append('    array ((0,0),(' + str(backgroundTileLayer.width() - 1) + ',' + str(backgroundTileLayer.height() - 1) + '))')
+        for y in range(backgroundTileLayer.height()):
+            for x in range(backgroundTileLayer.width()):
+                prefix = '    [ ' if x == 0 and y == 0 else '    , '
+                lines.append(
+                    cls.tileItemTemplate.substitute(
+                        prefix=prefix,
+                        body=cls.tilestackToHaskellTile(
+                            tileMap, x, y
+                        )
+                    ))
+        lines.append('    ]')
+        return lines
+
+
+
+    @classmethod
     def write(cls, tileMap, fileName):
         with open(fileName, 'w') as fileHandle:
             if cls.hasAllNeededTileLayers(tileMap):
                 backgroundTileLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.BACKGROUND_LAYER))
+                # Header
                 textLines = cls.fileHeader(fileName)
-                textLines.append('    array ((0,0),(' + str(backgroundTileLayer.width() - 1) + ',' + str(backgroundTileLayer.height() - 1) + '))')
-                for y in range(backgroundTileLayer.height()):
-                    for x in range(backgroundTileLayer.width()):
-                        prefix = '    [ ' if x == 0 and y == 0 else '    , '
-                        textLines.append(
-                            cls.tileItemTemplate.substitute(
-                                prefix=prefix,
-                                body=cls.tilestackToHaskellTile(
-                                    tileMap, x, y
-                                )
-                            ))
-                textLines.append('    ]')
+                # Body
+                textLines += cls.tileArrayLines(tileMap, backgroundTileLayer)
+                # Footer
                 textLines = textLines + cls.fileFooter(fileName)
                 for line in textLines:
                     print >>fileHandle, line

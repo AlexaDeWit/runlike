@@ -4,6 +4,7 @@ module Maps.TestTown where
 import         Data.Array
 import         Types.GameMap
 import         Types.Tile
+import         Types.Character
 
 
 map :: GameMap

@@ -1,6 +1,6 @@
 module Types.Character where
 
-import Types.Tile      (CharacterRepresentation(..))
+import           Types.Tile (CharacterRepresentation (..))
 
 data Character
   = Character
