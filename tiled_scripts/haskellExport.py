@@ -12,6 +12,7 @@ class HaskellExport(Plugin):
             '',
             '',
             'import         Data.Array',
+            'import         Data.Map        (fromList)',
             'import         Types.GameMap',
             'import         Types.Tile',
             'import         Types.Character',
@@ -21,6 +22,7 @@ class HaskellExport(Plugin):
         definitions = [
             'map :: GameMap',
             'map =',
+            '  GameMap { '
         ]
         return [moduleLine] + imports + definitions
 
@@ -41,8 +43,8 @@ class HaskellExport(Plugin):
             BACKGROUND_LAYER: 0,
             FOREGROUND_LAYER: 1,
             MOVEMENT_LAYER: 2,
-            OBJECTS_LAYER: 3,
-            CHARACTER_LAYER: 4
+            OBJECTS_LAYER: 4,
+            CHARACTER_LAYER: 3
         }
 
     tileItemTemplate = Template('${prefix}${body}')
@@ -152,11 +154,11 @@ class HaskellExport(Plugin):
 
     @classmethod
     def tileArrayLines(cls, tileMap, backgroundTileLayer):
-        lines = ['  GameMap { tiles =']
-        lines.append('    array ((0,0),(' + str(backgroundTileLayer.width() - 1) + ',' + str(backgroundTileLayer.height() - 1) + '))')
+        lines = ['    tiles =']
+        lines.append('      array ((0,0),(' + str(backgroundTileLayer.width() - 1) + ',' + str(backgroundTileLayer.height() - 1) + '))')
         for y in range(backgroundTileLayer.height()):
             for x in range(backgroundTileLayer.width()):
-                prefix = '    [ ' if x == 0 and y == 0 else '    , '
+                prefix = '      [ ' if x == 0 and y == 0 else '    , '
                 lines.append(
                     cls.tileItemTemplate.substitute(
                         prefix=prefix,
@@ -164,7 +166,27 @@ class HaskellExport(Plugin):
                             tileMap, x, y
                         )
                     ))
-        lines.append('    ]')
+        lines.append('      ]')
+        return lines
+
+    @classmethod
+    def characterMapLines(cls, tileMap):
+        charactersLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.CHARACTER_LAYER))
+        lines = ['    , characters =']
+        lines.append('      fromList')
+        itemLines = []
+        openArray = '        ['
+        for y in range(charactersLayer.height()):
+            for x in range(charactersLayer.width()):
+                prefix = openArray if len(itemLines) == 0 else '        , '
+                tile = charactersLayer.cellAt(x, y).tile()
+                if tile is not None:
+                    print(tile.id())
+                    itemLines.append(prefix + str(cls.characterTileDefinitions[tile.id()]))
+        if len(itemLines) == 0:
+            itemLines.append(openArray)
+        lines = lines + itemLines
+        lines.append('        ]')
         return lines
 
 
@@ -178,6 +200,7 @@ class HaskellExport(Plugin):
                 textLines = cls.fileHeader(fileName)
                 # Body
                 textLines += cls.tileArrayLines(tileMap, backgroundTileLayer)
+                textLines += cls.characterMapLines(tileMap)
                 # Footer
                 textLines = textLines + cls.fileFooter(fileName)
                 for line in textLines:

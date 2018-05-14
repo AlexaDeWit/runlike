@@ -2,6 +2,7 @@ module Maps.TestTown where
 
 
 import         Data.Array
+import         Data.Map        (fromList)
 import         Types.GameMap
 import         Types.Tile
 import         Types.Character
@@ -9,9 +10,10 @@ import         Types.Character
 
 map :: GameMap
 map =
-  GameMap { tiles =
-    array ((0,0),(25,20))
-    [ ((  0,   0), Tile    Rocky      Nothing      []             )
+  GameMap { 
+    tiles =
+      array ((0,0),(25,20))
+      [ ((  0,   0), Tile    Rocky      Nothing      []             )
     , ((  1,   0), Tile    Rocky      Nothing      []             )
     , ((  2,   0), Tile    Rocky      Nothing      []             )
     , ((  3,   0), Tile    Rocky      Nothing      []             )
@@ -557,5 +559,9 @@ map =
     , (( 23,  20), Tile    Rocky      Nothing      []             )
     , (( 24,  20), Tile    Rocky      Nothing      []             )
     , (( 25,  20), Tile    Rocky      Nothing      []             )
-    ]
+      ]
+    , characters =
+      fromList
+         [
+        ]
   }
