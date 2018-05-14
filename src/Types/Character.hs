@@ -7,6 +7,7 @@ data Character
     { representation :: CharacterRepresentation
     }
 
+-- Default Characters
 
 rat :: Character
 rat = Character Rat
