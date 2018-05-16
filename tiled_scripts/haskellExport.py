@@ -102,18 +102,6 @@ class HaskellExport(Plugin):
             return '[]'
 
     @classmethod
-    def characterLayerComponent(cls, tile):
-        return "Nothing"
-
-    @classmethod
-    def objectLayerComponent(cls, tile):
-        if tile is None:
-            return "[]"
-        idNum = tile.id()
-        indices = []
-        return indices[idNum] if idNum < len(indices) else "[]"
-
-    @classmethod
     def tilestackToHaskellTile(cls, tileMap, x, y):
         backgroundTileLayer = tileLayerAt(
                 tileMap, cls.tileLayerIndices.get(cls.BACKGROUND_LAYER)
