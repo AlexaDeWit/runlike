@@ -7,6 +7,9 @@ class HaskellExport(Plugin):
     @classmethod
     def fileHeader(cls, fileName):
         name = fileName.split('/')[-1].split('.')[0]
+        pragmas = [
+            '{-# OPTIONS_GHC -Wno-unused-imports #-}'
+        ]
         moduleLine = 'module Maps.' + name + ' where'
         imports = [
             '',
@@ -16,8 +19,8 @@ class HaskellExport(Plugin):
             'import         Data.Map        (fromList)',
             'import         Types.GameMap',
             'import         Types.Tile',
-            'import         Types.Character',
-            'import         Types.Object',
+            'import         GameData.Characters',
+            'import         GameData.GameObjects',
             '',
             ''
         ]
@@ -26,7 +29,7 @@ class HaskellExport(Plugin):
             'map =',
             '  GameMap {'
         ]
-        return [moduleLine] + imports + definitions
+        return pragmas + [moduleLine] + imports + definitions
 
     @classmethod
     def fileFooter(cls, fileName):

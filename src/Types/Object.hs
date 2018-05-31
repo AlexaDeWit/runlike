@@ -11,5 +11,3 @@ data Object
   = Item
   | Container
 
-
--- Default Objects

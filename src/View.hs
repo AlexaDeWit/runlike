@@ -1,15 +1,15 @@
 module View where
 
 
+import           Protolude
 import           Helm
 import           Model
 import           Helm.Graphics2D
 import           Data.Maybe        (catMaybes)
 import           Types.GameMap
 import           Types.Tile        (Background(..), Foreground(..), Tile(..))
-import           Types.Tileset     (ImageScaleRate(..))
+import           Types.Tileset     (ImageScaleRate(ImageScaleRate))
 import           Data.Array        (assocs)
-import           Data.Tuple.Extra  (second)
 import           Linear.V2         (V2(V2))
 
 data PreparedTilesets e

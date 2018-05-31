@@ -1,7 +1,7 @@
 module Types.Tileset
   (
     ImageScaleRate (..)
-  , TileSet (..)
+  , Tileset (..)
   , divideByScaleRate
   ) where
 
@@ -24,15 +24,15 @@ data ImageScaleRate
     , y :: Int
     }
 
-data TileSet e
-  = TileSet
+data Tileset e
+  = Tileset
     { imageScaleRate :: ImageScaleRate
     , image          :: Image e
     , imageDims      :: V2 Int
     }
 
-imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet e -> Form e
-imageToBoundedComponent point (TileSet imageScale img dims) = croppedImage v2Pos formDims img where
+imageToBoundedComponent :: (Bounded a, Enum a) => a -> Tileset e -> Form e
+imageToBoundedComponent point (Tileset imageScale img dims) = croppedImage v2Pos formDims img where
   xScale = x imageScale
   yScale = y imageScale
   listIndex = fromEnum point
@@ -46,7 +46,7 @@ imageToBoundedComponent point (TileSet imageScale img dims) = croppedImage v2Pos
   formDims = V2 (fromIntegral xScale) (fromIntegral yScale)
 
 
-divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet e -> a -> Form e
+divideByScaleRate :: (Bounded a, Enum a, Ord a) => Tileset e -> a -> Form e
 divideByScaleRate tileset = withDef where
   composedMap = Map.fromList $ map (\k -> (k, imageToBoundedComponent k tileset)) allValues
   imageScale = imageScaleRate tileset

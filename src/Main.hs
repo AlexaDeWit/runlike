@@ -1,5 +1,6 @@
 module Main where
 
+import           Protolude
 import           Helm
 import           Helm.Graphics2D       (Form)
 import           Helm.Engine.SDL       (SDLEngineConfig(..))
@@ -7,8 +8,7 @@ import           Helm.Engine.SDL.Asset (withImage, imageDims)
 import           Model                 (initial)
 import           View
 import           Update                (update)
-import           Types.Tile
-import           Types.Tileset
+import           Types.Tileset         (ImageScaleRate(ImageScaleRate), Tileset(Tileset), divideByScaleRate)
 import           Subscriptions         (subscriptions)
 import           Linear.V2             (V2(V2))
 import           Control.Monad.Managed
@@ -54,4 +54,4 @@ prepareImages engine =
     return $ PreparedTilesets tilesetScaleFactor bgTilesetFn fgTilesetFn
 
 toTilesetFn :: (Bounded a, Enum a, Ord a) => Image SDL.SDLEngine -> a -> Form SDL.SDLEngine
-toTilesetFn image = divideByScaleRate $ TileSet tilesetScaleFactor image (imageDims image)
+toTilesetFn image = divideByScaleRate $ Tileset tilesetScaleFactor image (imageDims image)

@@ -67,6 +67,8 @@ executable runlike
                      , Types.Object
                      , Types.Character
                      , Types.Tileset
+                     , GameData.Characters
+                     , GameData.GameObjects
                      , Math
                      , Model
                      , Action
@@ -88,7 +90,6 @@ executable runlike
                       , containers
                       , lens
                       , managed
-                      , extra
                       , protolude
   
   -- Directories containing source files.

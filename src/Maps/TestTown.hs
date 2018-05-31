@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-unused-imports #-}
 module Maps.TestTown where
 
 
@@ -6,8 +7,8 @@ import         Data.Array
 import         Data.Map        (fromList)
 import         Types.GameMap
 import         Types.Tile
-import         Types.Character
-import         Types.Object
+import         GameData.Characters
+import         GameData.GameObjects
 
 
 map :: GameMap
