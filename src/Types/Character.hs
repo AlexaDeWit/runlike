@@ -1,16 +1,12 @@
+{-# LANGUAGE DeriveGeneric #-}
 module Types.Character where
 
+import           Protolude (Generic, Show)
 import           Types.Tile (CharacterRepresentation (..))
 
 data Character
   = Character
     { representation :: CharacterRepresentation
     }
+    deriving (Generic, Show)
 
--- Default Characters
-
-rat :: Character
-rat = Character Rat
-
-direRat :: Character
-direRat = Character DireRat

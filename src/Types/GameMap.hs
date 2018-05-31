@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric #-}
 module Types.GameMap where
 
 import           Protolude
@@ -16,3 +17,5 @@ data GameMap = GameMap
   , characters :: Map   (Int, Int) Character
   , objects    :: Map   (Int, Int) [ObjectWithRepresentation]
   }
+  deriving (Generic, Show)
+

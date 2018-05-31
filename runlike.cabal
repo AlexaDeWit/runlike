@@ -91,6 +91,7 @@ executable runlike
                       , lens
                       , managed
                       , protolude
+                      , aeson
   
   -- Directories containing source files.
   hs-source-dirs:      src
