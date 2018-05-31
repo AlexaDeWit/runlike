@@ -7,6 +7,7 @@ import         Data.Map        (fromList)
 import         Types.GameMap
 import         Types.Tile
 import         Types.Character
+import         Types.Object
 
 
 map :: GameMap
@@ -563,6 +564,11 @@ map =
         ]
     , characters =
       fromList
-        [
+        [ 
+        ]
+    , objects =
+      fromList
+        [ (( 8, 1), [emptyChest])
+        , (( 14, 16), [sachel])
         ]
   }

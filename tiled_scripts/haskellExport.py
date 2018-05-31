@@ -17,6 +17,7 @@ class HaskellExport(Plugin):
             'import         Types.GameMap',
             'import         Types.Tile',
             'import         Types.Character',
+            'import         Types.Object',
             '',
             ''
         ]
@@ -62,6 +63,12 @@ class HaskellExport(Plugin):
 
     characterTileDefinitions = [
         "rat", "direRat"
+    ]
+
+    objectTileDefinitions = [
+        "emptyChest",
+        "fullChest",
+        "sachel"
     ]
 
     @classmethod
@@ -164,13 +171,12 @@ class HaskellExport(Plugin):
         lines = ['    , characters =']
         lines.append('      fromList')
         itemLines = []
-        openArray = '        ['
+        openArray = '        [ '
         for y in range(charactersLayer.height()):
             for x in range(charactersLayer.width()):
                 prefix = openArray if len(itemLines) == 0 else '        , '
                 tile = charactersLayer.cellAt(x, y).tile()
                 if tile is not None:
-                    print(tile.id())
                     itemLines.append(prefix + str(cls.characterTileDefinitions[tile.id()]))
         if len(itemLines) == 0:
             itemLines.append(openArray)
@@ -178,6 +184,24 @@ class HaskellExport(Plugin):
         lines.append('        ]')
         return lines
 
+    @classmethod
+    def objectsMapLines(cls, tileMap):
+        objectsLayer = tileLayerAt(tileMap, cls.tileLayerIndices.get(cls.OBJECTS_LAYER))
+        lines = ['    , objects =']
+        lines.append('      fromList')
+        itemLines = []
+        openArray = '        [ '
+        for y in range(objectsLayer.height()):
+            for x in range(objectsLayer.width()):
+                prefix = openArray if len(itemLines) == 0 else '        , '
+                tile = objectsLayer.cellAt(x, y).tile()
+                if tile is not None:
+                    itemLines.append(prefix + "(( " + str(x) + ", " + str(y) + "), [" + str(cls.objectTileDefinitions[tile.id()]) + "])")
+        if len(itemLines) == 0:
+            itemLines.append(openArray)
+        lines = lines + itemLines
+        lines.append('        ]')
+        return lines
 
 
     @classmethod
@@ -190,6 +214,7 @@ class HaskellExport(Plugin):
                 # Body
                 textLines += cls.tileArrayLines(tileMap, backgroundTileLayer)
                 textLines += cls.characterMapLines(tileMap)
+                textLines += cls.objectsMapLines(tileMap)
                 # Footer
                 textLines = textLines + cls.fileFooter(fileName)
                 for line in textLines:
