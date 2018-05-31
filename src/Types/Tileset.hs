@@ -1,16 +1,18 @@
 module Types.Tileset
   (
-    ImageScaleRate (ImageScaleRate)
-  , TileSet (TileSet)
+    ImageScaleRate (..)
+  , TileSet (..)
   , divideByScaleRate
   ) where
 
+import           Protolude
 import           Helm
 import           Helm.Graphics2D
 import           Helm.Color
 import           Types.Tile
 import           Control.Lens
 import           Linear.V2       (V2(V2), _x, _y)
+import           Math            (clamp)
 
 import qualified Data.Map as Map
 
@@ -46,10 +48,9 @@ imageToBoundedComponent point (TileSet imageScale img dims) = croppedImage v2Pos
   tilesWide = imageWidth `div` xScale
   tilesHigh = imageHeight `div` yScale
   xIndex = index `mod` tilesWide
-  yIndex = (index - xIndex) `div` tilesWide
+  yIndex = clamp 0 tilesHigh $ (index - xIndex) `div` tilesWide
   v2Pos = V2 (fromIntegral (xIndex * xScale)) (fromIntegral (yIndex * yScale))
   formDims = V2 (fromIntegral xScale) (fromIntegral yScale)
-  -- TODO: upper bound limiting
 
 
 divideByScaleRate :: (Bounded a, Enum a, Ord a) => TileSet e -> a -> Form e

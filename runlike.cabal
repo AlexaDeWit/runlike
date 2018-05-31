@@ -67,6 +67,7 @@ executable runlike
                      , Types.Object
                      , Types.Character
                      , Types.Tileset
+                     , Math
                      , Model
                      , Action
                      , View
@@ -88,10 +89,14 @@ executable runlike
                       , lens
                       , managed
                       , extra
+                      , protolude
   
   -- Directories containing source files.
   hs-source-dirs:      src
   
   -- Base language which the package is written in.
   default-language:    Haskell2010
+
+  ghc-options:         -Wall -Werror
   
+  default-extensions:  NoImplicitPrelude

@@ -1,5 +1,7 @@
 module Types.Tile where
 
+import            Protolude
+
 data Background
     = Grass
     | Snow

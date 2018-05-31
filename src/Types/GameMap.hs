@@ -1,5 +1,6 @@
 module Types.GameMap where
 
+import           Protolude
 import           Data.Array      (Array)
 import           Data.Map        (Map)
 import           Types.Tile      (Tile)

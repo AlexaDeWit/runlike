@@ -1,6 +1,7 @@
 module Maps.TestTown where
 
 
+import         Protolude
 import         Data.Array
 import         Data.Map        (fromList)
 import         Types.GameMap

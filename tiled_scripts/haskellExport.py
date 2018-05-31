@@ -11,6 +11,7 @@ class HaskellExport(Plugin):
         imports = [
             '',
             '',
+            'import         Protolude',
             'import         Data.Array',
             'import         Data.Map        (fromList)',
             'import         Types.GameMap',
