@@ -13,5 +13,5 @@ import           Types.Object    (ObjectWithRepresentation)
 data GameMap = GameMap
   { tiles      :: Array (Int, Int) Tile
   , characters :: Map   (Int, Int) Character
-  , objects    :: Map   (Int, Int) ObjectWithRepresentation
+  , objects    :: Map   (Int, Int) [ObjectWithRepresentation]
   }
