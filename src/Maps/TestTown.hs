@@ -11,7 +11,7 @@ import         Types.Character
 
 map :: GameMap
 map =
-  GameMap { 
+  GameMap {
     tiles =
       array ((0,0),(25,20))
         [ ((  0,   0), Tile    Rocky      Nothing         []             )

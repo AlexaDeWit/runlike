@@ -9,7 +9,6 @@ import           Protolude
 import           Helm
 import           Helm.Graphics2D
 import           Helm.Color
-import           Types.Tile
 import           Control.Lens
 import           Linear.V2       (V2(V2), _x, _y)
 import           Math            (clamp)
@@ -18,12 +17,6 @@ import qualified Data.Map as Map
 
 allValues :: (Bounded a, Enum a) => [a]
 allValues = [minBound..]
-
-backgrounds :: [Background]
-backgrounds = allValues
-
-foregrounds :: [Foreground]
-foregrounds = allValues
 
 data ImageScaleRate
   = ImageScaleRate
@@ -42,13 +35,13 @@ imageToBoundedComponent :: (Bounded a, Enum a) => a -> TileSet e -> Form e
 imageToBoundedComponent point (TileSet imageScale img dims) = croppedImage v2Pos formDims img where
   xScale = x imageScale
   yScale = y imageScale
-  index = fromEnum point
+  listIndex = fromEnum point
   imageWidth = dims ^._x
   imageHeight = dims ^._y
   tilesWide = imageWidth `div` xScale
   tilesHigh = imageHeight `div` yScale
-  xIndex = index `mod` tilesWide
-  yIndex = clamp 0 tilesHigh $ (index - xIndex) `div` tilesWide
+  xIndex = listIndex `mod` tilesWide
+  yIndex = clamp 0 tilesHigh $ (listIndex - xIndex) `div` tilesWide
   v2Pos = V2 (fromIntegral (xIndex * xScale)) (fromIntegral (yIndex * yScale))
   formDims = V2 (fromIntegral xScale) (fromIntegral yScale)
 
