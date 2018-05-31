@@ -20,16 +20,19 @@ data PreparedTilesets e
     }
 
 view :: PreparedTilesets e-> Model -> Graphics e
-view tilesets model = Graphics2D $ collage [toForm $ bgLayer tilesets model, toForm $ fgLayer tilesets model]
+view tilesets (Battle battleState) = Graphics2D $ battleView tilesets battleState
 
-bgLayer :: PreparedTilesets e -> Model -> Collage e
+battleView :: PreparedTilesets e -> BattleState -> Collage e
+battleView tilesets model = collage [toForm $ bgLayer tilesets model, toForm $ fgLayer tilesets model]
+
+bgLayer :: PreparedTilesets e -> BattleState -> Collage e
 bgLayer tilesets model = collage positionedTiles where
-  mapTiles = fmap (backgroundTile tilesets . tileBackground) (tiles $ currentMap model)
+  mapTiles = fmap (backgroundTile tilesets . tileBackground) (tiles $ _battleMap model)
   positionedTiles = fmap (mapOffset $ tileScaleRate tilesets) (assocs mapTiles)
 
-fgLayer :: PreparedTilesets e -> Model -> Collage e
+fgLayer :: PreparedTilesets e -> BattleState -> Collage e
 fgLayer tilesets model = collage positionedTiles where
-  positionPairs   = assocs $ fmap tileForeground  (tiles $ currentMap model)
+  positionPairs   = assocs $ fmap tileForeground  (tiles $ _battleMap model)
   cleanedList     = catMaybes $ fmap sequence positionPairs
   mappedResults   = (fmap . second) (foregroundTile tilesets) cleanedList
   positionedTiles = fmap (mapOffset $ tileScaleRate tilesets) mappedResults
